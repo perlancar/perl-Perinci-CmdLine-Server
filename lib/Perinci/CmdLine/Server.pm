@@ -60,6 +60,7 @@ _
         },
         package => {
             summary => 'Where to put the functions to access the object',
+            schema  => 'str*',
             description => <<'_',
 
 The default is `Perinci::CmdLine::Server::app::` + `<name>`. But you can put it
