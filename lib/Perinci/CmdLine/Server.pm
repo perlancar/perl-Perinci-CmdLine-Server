@@ -141,6 +141,10 @@ _
 
 =head1 SYNOPSIS
 
+=head2 Running the server
+
+From your L<Perinci::Access::HTTP::Server>-based PSGI application:
+
  use Perinci::CmdLine::Server qw(create_cmdline_server);
  create_cmdline_server(
      name         => 'app1',
@@ -150,13 +154,42 @@ _
      },
  );
 
-Shortcut for simple cases:
+Or, shortcut for simple cases:
 
  use Perinci::CmdLine::Server -app1 => '/Some/Module/some_func';
 
-From command-line:
+Or, for testing using L<peri-htserve>:
 
- % perl -MPerinci::CmdLine::Server=-app1,/Some/Module/some_func ...
+ % peri-htserve --gepok-unix-socket /tmp/app1.sock \
+     -MPerinci::CmdLine::Server=-app1,/Some/Module/some_func \
+     Perinci::CmdLine::Server::app::app1,noload
+
+=head2 Using the server for completion
+
+ # foo-complete
+ #!perl
+ use HTTP::Tiny::UNIX;
+ use JSON;
+
+ my $hres = HTTP::Tiny::UNIX->new->post_form(
+    'http:/tmp/app1.sock//api/Perinci/CmdLine/Server/app/app1/complete_cmdline',
+    {
+        cmdline     => $ENV{COMP_LINE},
+        point       => $ENV{COMP_POINT},
+        '-riap-fmt' => 'json',
+    },
+ );
+ my $rres = decode_json($hres->{content});
+ print $rres->[2];
+
+Activate bash tab completion:
+
+ % chmod +x foo-complete
+ % complete -C foo-complete foo
+ % foo <Tab>
+
+Now foo will be tab-completed using Rinci specification from C<Some::Module>'s
+C<some_func>.
 
 
 =head1 DESCRIPTION
@@ -229,5 +262,7 @@ handled.
 =head1 SEE ALSO
 
 L<Perinci::CmdLine>
+
+L<Perinci::Access::HTTP::Server>
 
 =cut
