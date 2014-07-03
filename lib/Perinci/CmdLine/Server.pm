@@ -10,12 +10,19 @@ sub import {
 
     my $caller = caller;
 
-    for (@_) {
-        if ($_ =~ /\A(create_cmdline_server)\z/) {
+    while (@_) {
+        my $arg = shift @_;
+        if ($arg =~ /\A(create_cmdline_server)\z/) {
             no strict 'refs';
-            *{"$caller\::$_"} = \&{$_};
+            *{"$caller\::$arg"} = \&{$arg};
+        } elsif ($arg =~ /\A-(.+)\z/) {
+            my $name = $1;
+            die "Invalid app name $name" unless $name =~ /\A\w+\z/;
+            die "$arg requires argument" unless @_;
+            my $url = shift;
+            create_cmdline_server(name => $name, cmdline_args => {url=>$url});
         } else {
-            die "$_ is not imported by ".__PACKAGE__;
+            die "$arg is not imported by ".__PACKAGE__;
         }
     }
 }
@@ -134,6 +141,23 @@ _
 
 =head1 SYNOPSIS
 
+ use Perinci::CmdLine::Server qw(create_cmdline_server);
+ create_cmdline_server(
+     name         => 'app1',
+     cmdline_args => {
+         url         => '/Some/Module/some_func',
+         log_any_app => 0,
+     },
+ );
+
+Shortcut for simple cases:
+
+ use Perinci::CmdLine::Server -app1 => '/Some/Module/some_func';
+
+From command-line:
+
+ % perl -MPerinci::CmdLine::Server=-app1,/Some/Module/some_func ...
+
 
 =head1 DESCRIPTION
 
@@ -171,7 +195,7 @@ say, 30 minute or an hour).
 In your L<Perinci::Access::HTTP::Server>-based PSGI application:
 
  use Perinci::CmdLine::Server qw(create_cmdline_server);
- start_cmdline_server(
+ create_cmdline_server(
      name         => 'app1',
      cmdline_args => {
          url         => '/Some/Module/some_func',
