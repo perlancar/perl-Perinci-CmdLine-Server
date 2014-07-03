@@ -1,5 +1,12 @@
 Revision history for Perinci-CmdLine-Server
 
+0.02     2014-07-03 (SHARYANTO)
+
+         - No functional changes.
+
+         - Add concrete example (starting the server, completion script) in Synopsis.
+
+
 0.01     2014-07-03 (SHARYANTO)
 
          - First release.
