@@ -5,6 +5,8 @@ use strict;
 use warnings;
 #use Log::Any '$log';
 
+use Perinci::CmdLine 1.16;
+
 sub import {
     my $pkg = shift;
 
@@ -72,8 +74,6 @@ _
     result_naked => 1,
 };
 sub create_cmdline_server {
-    require Perinci::CmdLine;
-
     my %cargs = @_;
 
     # store created cli's by name
