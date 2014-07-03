@@ -161,7 +161,7 @@ Or, shortcut for simple cases:
 
 Or, for testing using L<peri-htserve>:
 
- % peri-htserve --gepok-unix-socket /tmp/app1.sock \
+ % peri-htserve --gepok-unix-sockets /tmp/app1.sock \
      -MPerinci::CmdLine::Server=-app1,/Some/Module/some_func \
      Perinci::CmdLine::Server::app::app1,noload
 
