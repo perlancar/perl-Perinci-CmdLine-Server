@@ -56,8 +56,25 @@ _
             req     => 1,
             pos     => 0,
         },
+        cmdline => {
+            summary => 'A Perinci::CmdLine object',
+            description => <<'_',
+
+If you set this argument, you're passing an existing object. Otherwise, a new
+Perinci::CmdLine object will be created (with `cmdline_args` passed to its
+constructor).
+
+_
+            schema => ['obj*'],
+        },
         cmdline_args => {
             summary => 'Arguments to be fed to Perinci::CmdLine constructor',
+            description => <<'_',
+
+If you specify this argument and not `cmdline`, a new Perinci::CmdLine object
+will be created.
+
+_
             schema  => [hash => default => {}],
         },
         package => {
@@ -83,7 +100,7 @@ sub create_cmdline_server {
     $name =~ /\A\w+\z/ or die "Invalid name, please use alphanumeric only";
     my $package = $cargs{package} // 'Perinci::CmdLine::Server::app::' . $name;
 
-    my $cli = Perinci::CmdLine->new(
+    my $cli = $cargs{cmdline} // Perinci::CmdLine->new(
         %{ $cargs{cmdline_args} // {} },
         exit => 0,
     );
