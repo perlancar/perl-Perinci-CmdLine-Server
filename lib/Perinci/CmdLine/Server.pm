@@ -64,6 +64,9 @@ If you set this argument, you're passing an existing object. Otherwise, a new
 Perinci::CmdLine object will be created (with `cmdline_args` passed to its
 constructor).
 
+Note: it is desirable that your existing Perinci::CmdLine object has its
+attribute exit => 0 :-) Otherwise, it will exit after the first run().
+
 _
             schema => ['obj*'],
         },
