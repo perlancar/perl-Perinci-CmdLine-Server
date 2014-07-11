@@ -143,7 +143,6 @@ _
             local $ENV{COMP_POINT} = $fargs{point};
             local $ENV{PERINCI_CMDLINE_SERVER} = 1;
             $cli->run();
-            [200, "OK", $cli->{_compres}];
         };
     }
 
