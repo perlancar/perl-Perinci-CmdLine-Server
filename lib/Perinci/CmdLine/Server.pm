@@ -218,9 +218,8 @@ Currently, L<Perinci::CmdLine>-based CLI applications have a perceptible startup
 overhead (between 0.15-0.35s or even more, depending on your hardware, those
 numbers are for 2011-2013 PC/laptop hardware). Some of the cause of the overhead
 is subroutine wrapping (see L<Perinci::Sub::Wrapper>) which also involves
-compilation of L<Sah> schemas (see L<Data::Schema>), all of which are necessary
-for the convenience of using L<Rinci> metadata to specify aspects of your
-functions.
+compilation of L<Sah> schemas (see L<Data::Sah>), all of which are necessary for
+the convenience of using L<Rinci> metadata to specify aspects of your functions.
 
 This level of overhead is a bit annoying when we are doing shell tab completion
 (Perinci::CmdLine-based applications call themselves for doing tab completion,
