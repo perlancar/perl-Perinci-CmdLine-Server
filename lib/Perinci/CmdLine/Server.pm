@@ -141,7 +141,6 @@ _
             my %fargs = @_;
             local $ENV{COMP_LINE}  = $fargs{cmdline};
             local $ENV{COMP_POINT} = $fargs{point};
-            local $ENV{PERINCI_CMDLINE_SERVER} = 1;
             $cli->run();
         };
     }
