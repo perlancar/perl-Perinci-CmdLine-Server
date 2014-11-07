@@ -1,5 +1,10 @@
 Revision history for Perinci-CmdLine-Server
 
+0.04     2014-11-07 (PERLANCAR)
+
+         - Adjust to Perinci::CmdLine 1.17 (run() now returns envres).
+
+
 0.03     2014-07-04 (SHARYANTO)
 
          - Add option 'cmdline' to accept an existing Perinci::CmdLine object.

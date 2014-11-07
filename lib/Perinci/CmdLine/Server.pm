@@ -5,7 +5,7 @@ use strict;
 use warnings;
 #use Log::Any '$log';
 
-use Perinci::CmdLine 1.16;
+use Perinci::CmdLine 1.17;
 
 sub import {
     my $pkg = shift;
