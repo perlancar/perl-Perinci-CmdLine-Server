@@ -1,5 +1,8 @@
 package Perinci::CmdLine::Server;
 
+# DATE
+# VERSION
+
 use 5.010001;
 use strict;
 use warnings;
@@ -150,11 +153,8 @@ _
     $cli;
 }
 
-# DATE
-# VERSION
-
 1;
-# ABSTRACT: Create CLI application instance and functions to access it
+# ABSTRACT:
 
 =for Pod::Coverage ^(import)$
 
