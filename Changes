@@ -1,5 +1,13 @@
 Revision history for Perinci-CmdLine-Server
 
+0.05    2015-04-22 (PERLANCAR)
+
+	- No functional changes.
+
+	- Update module name (Perinci::CmdLine ->
+	  Perinci::CmdLine::Classic).
+
+
 0.04     2014-11-07 (PERLANCAR)
 
          - Adjust to Perinci::CmdLine 1.17 (run() now returns envres).
