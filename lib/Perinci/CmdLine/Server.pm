@@ -8,7 +8,7 @@ use strict;
 use warnings;
 #use Log::Any '$log';
 
-use Perinci::CmdLine 1.17;
+use Perinci::CmdLine::Classic;
 
 sub import {
     my $pkg = shift;
@@ -36,7 +36,7 @@ our %SPEC;
 
 $SPEC{create_cmdline_server} = {
     v => 1.1,
-    summary => 'Create Perinci::CmdLine object and '.
+    summary => 'Create Perinci::CmdLine::Classic object and '.
         'some functions to access it in a Perl package',
     description => <<'_',
 
@@ -60,25 +60,25 @@ _
             pos     => 0,
         },
         cmdline => {
-            summary => 'A Perinci::CmdLine object',
+            summary => 'A Perinci::CmdLine::Classic object',
             description => <<'_',
 
 If you set this argument, you're passing an existing object. Otherwise, a new
-Perinci::CmdLine object will be created (with `cmdline_args` passed to its
-constructor).
+Perinci::CmdLine::Classic object will be created (with `cmdline_args` passed to
+its constructor).
 
-Note: it is desirable that your existing Perinci::CmdLine object has its
-attribute exit => 0 :-) Otherwise, it will exit after the first run().
+Note: it is desirable that your existing Perinci::CmdLine::Classic object has
+its attribute exit => 0 :-) Otherwise, it will exit after the first run().
 
 _
             schema => ['obj*'],
         },
         cmdline_args => {
-            summary => 'Arguments to be fed to Perinci::CmdLine constructor',
+            summary => 'Arguments to be fed to Perinci::CmdLine::Classic constructor',
             description => <<'_',
 
-If you specify this argument and not `cmdline`, a new Perinci::CmdLine object
-will be created.
+If you specify this argument and not `cmdline`, a new Perinci::CmdLine::Classic
+object will be created.
 
 _
             schema  => [hash => default => {}],
@@ -106,7 +106,7 @@ sub create_cmdline_server {
     $name =~ /\A\w+\z/ or die "Invalid name, please use alphanumeric only";
     my $package = $cargs{package} // 'Perinci::CmdLine::Server::app::' . $name;
 
-    my $cli = $cargs{cmdline} // Perinci::CmdLine->new(
+    my $cli = $cargs{cmdline} // Perinci::CmdLine::Classic->new(
         %{ $cargs{cmdline_args} // {} },
         exit => 0,
     );
@@ -213,17 +213,19 @@ C<some_func>.
 
 =head1 DESCRIPTION
 
-Currently, L<Perinci::CmdLine>-based CLI applications have a perceptible startup
-overhead (between 0.15-0.35s or even more, depending on your hardware, those
-numbers are for 2011-2013 PC/laptop hardware). Some of the cause of the overhead
-is subroutine wrapping (see L<Perinci::Sub::Wrapper>) which also involves
-compilation of L<Sah> schemas (see L<Data::Sah>), all of which are necessary for
-the convenience of using L<Rinci> metadata to specify aspects of your functions.
+Currently, L<Perinci::CmdLine::Classic>-based CLI applications have a
+perceptible startup overhead (between 0.15-0.35s or even more, depending on your
+hardware, those numbers are for 2011-2013 PC/laptop hardware). Some of the cause
+of the overhead is subroutine wrapping (see L<Perinci::Sub::Wrapper>) which also
+involves compilation of L<Sah> schemas (see L<Data::Sah>), all of which are
+necessary for the convenience of using L<Rinci> metadata to specify aspects of
+your functions.
 
 This level of overhead is a bit annoying when we are doing shell tab completion
-(Perinci::CmdLine-based applications call themselves for doing tab completion,
-e.g. through bash's C<complete -C progname progname> mechanism). Ideally,
-tab completion should take no longer than 0.05-0.1s to feel instantaneous.
+(Perinci::CmdLine::Classic-based applications call themselves for doing tab
+completion, e.g. through bash's C<complete -C progname progname> mechanism).
+Ideally, tab completion should take no longer than 0.05-0.1s to feel
+instantaneous.
 
 One (temporary?) solution to this annoyance is to start a daemon that listens to
 L<Riap> requests (either through Unix domain sockets or TCP/IP). This way, the
@@ -233,13 +235,13 @@ requires, e.g. L<HTTP::Tiny::Unix> + L<Complete::Bash>).
 
 In the future, other functionalities aside from completion can also be
 "off-loaded" to the server side to make the CLI program lighter and quicker to
-start. This might require a refactoring of Perinci::CmdLine codebase so it's
-more "stateless" and reusable/safer for multiple requests (perhaps will be made
-non-OO in the core so it's clear what states are being passed?)
+start. This might require a refactoring of Perinci::CmdLine::Classic codebase so
+it's more "stateless" and reusable/safer for multiple requests (perhaps will be
+made non-OO in the core so it's clear what states are being passed?)
 
-In the future, Perinci::CmdLine can also be configured to automatically start a
-daemon after the first run (and retire/kill the daemon after being idle for,
-say, 30 minute or an hour).
+In the future, Perinci::CmdLine::Classic might also be configured to
+automatically start a daemon after the first run (and retire/kill the daemon
+after being idle for, say, 30 minute or an hour).
 
 =head2 How does it work?
 
@@ -254,15 +256,15 @@ In your L<Perinci::Access::HTTP::Server>-based PSGI application:
      },
  );
 
-This will create an instance of Perinci::CmdLine object (the C<cmdline_args>
-argument will be fed to the constructor). It will also create a Perl package
-dynamically (the default is C<Perinci::CmdLine::Server::app::> + application
-name specified in C<name> argument). The package will contain several functions
-along with their L<Rinci> metadata. The functions can then be accessed over
-L<Riap> protocol. So far, the only function available is: C<complete_cmdline>.
-You can use it to request command-line completion. The Perinci::CmdLine object
-will persist as long as the process lives. You can of course start several
-applications.
+This will create an instance of Perinci::CmdLine::Classic object (the
+C<cmdline_args> argument will be fed to the constructor). It will also create a
+Perl package dynamically (the default is C<Perinci::CmdLine::Server::app::> +
+application name specified in C<name> argument). The package will contain
+several functions along with their L<Rinci> metadata. The functions can then be
+accessed over L<Riap> protocol. So far, the only function available is:
+C<complete_cmdline>. You can use it to request command-line completion. The
+Perinci::CmdLine::Classic object will persist as long as the process lives. You
+can of course start several applications.
 
 =head2 Caveats
 
@@ -279,7 +281,7 @@ handled.
 
 =head1 SEE ALSO
 
-L<Perinci::CmdLine>
+L<Perinci::CmdLine::Classic>
 
 L<Perinci::Access::HTTP::Server>
 
