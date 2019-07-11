@@ -1,4 +1,4 @@
-0.06    2015-09-03 (PERLANCAR)
+0.06    2015-09-03  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -7,7 +7,7 @@
 	  requirement.
 
 
-0.05    2015-04-22 (PERLANCAR)
+0.05    2015-04-22  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -15,23 +15,23 @@
 	  Perinci::CmdLine::Classic).
 
 
-0.04     2014-11-07 (PERLANCAR)
+0.04     2014-11-07  Released-By: PERLANCAR
 
          - Adjust to Perinci::CmdLine 1.17 (run() now returns envres).
 
 
-0.03     2014-07-04 (SHARYANTO)
+0.03     2014-07-04  Released-By: SHARYANTO
 
          - Add option 'cmdline' to accept an existing Perinci::CmdLine object.
 
 
-0.02     2014-07-03 (SHARYANTO)
+0.02     2014-07-03  Released-By: SHARYANTO
 
          - No functional changes.
 
          - Add concrete example (starting the server, completion script) in Synopsis.
 
 
-0.01     2014-07-03 (SHARYANTO)
+0.01     2014-07-03  Released-By: SHARYANTO
 
          - First release.
